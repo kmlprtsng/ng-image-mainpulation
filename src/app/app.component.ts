@@ -15,9 +15,14 @@ export class AppComponent implements OnInit {
     canvasElm.height = 200;
 
     this.ctx = canvasElm.getContext('2d');
-    this.ctx.fillStyle = 'e2e2e2';
-    this.ctx.fillRect(0, 0, 200, 200);
-    // let image = new Image();
 
+    const image = new Image();
+    image.src = 'https://thetuitionteacher.com/blog/wp-content/uploads/2016/04/business-progress-graphic.jpg';
+
+    image.onload = () => {
+      image.height = 200;
+      image.width = 200;
+      this.ctx.drawImage(image, 0, 0, 200, 200);
+    };
   }
 }
