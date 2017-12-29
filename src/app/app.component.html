@@ -1,5 +1,16 @@
 <div class="photo-editor">
-  <img src="/assets/dummy_img.png" alt="">
+  <img src="/assets/dummy_img.png" alt=""
+       [ngStyle]="{left: x + 'px', top: y + 'px', transform: 'scale(' + scale + ')' }" >
+</div>
+<div>
+  <button (click)="moveUp()">up</button>
+  <button (click)="moveDown()">down</button>
+  <button (click)="moveLeft()">left</button>
+  <button (click)="moveRight()">right</button>
+</div>
+<div>
+  <button (click)="zoomIn()">Zoom in</button>
+  <button (click)="zoomOut()">Zoom out</button>
 </div>
 
 
