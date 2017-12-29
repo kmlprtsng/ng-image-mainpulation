@@ -9,6 +9,7 @@ export class AppComponent implements OnInit {
   x = 100;
   y = 100;
   scale = 1;
+  rotate = 0;
 
   ngOnInit(): void {
   }
@@ -35,5 +36,13 @@ export class AppComponent implements OnInit {
 
   zoomOut() {
     this.scale -= 0.025;
+  }
+
+  rotateLeft() {
+    this.rotate -= 1;
+  }
+
+  rotateRight() {
+    this.rotate += 1;
   }
 }
