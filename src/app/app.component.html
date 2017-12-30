@@ -3,18 +3,18 @@
        [ngStyle]="{left: x + 'px', top: y + 'px', transform: 'scale(' + scale + ') rotate(' + rotate + 'deg)' }" >
 </div>
 <div>
-  <button (click)="moveUp()">up</button>
-  <button (click)="moveDown()">down</button>
-  <button (click)="moveLeft()">left</button>
-  <button (click)="moveRight()">right</button>
+  <button (mousedown)="startAction('moveUp')" (mouseup)="stopAction()">up</button>
+  <button (mousedown)="startAction('moveDown')" (mouseup)="stopAction()">down</button>
+  <button (mousedown)="startAction('moveLeft')" (mouseup)="stopAction()">left</button>
+  <button (mousedown)="startAction('moveRight')" (mouseup)="stopAction()">right</button>
 </div>
 <div>
-  <button (click)="zoomIn()">Zoom in</button>
-  <button (click)="zoomOut()">Zoom out</button>
+  <button (mousedown)="startAction('zoomIn')" (mouseup)="stopAction()">Zoom in</button>
+  <button (mousedown)="startAction('zoomOut')" (mouseup)="stopAction()">Zoom out</button>
 </div>
 <div>
-  <button (click)="rotateLeft()">Rotate left</button>
-  <button (click)="rotateRight()">Rotate right</button>
+  <button (mousedown)="startAction('rotateLeft')" (mouseup)="stopAction()">Rotate left</button>
+  <button (mousedown)="startAction('rotateRight')" (mouseup)="stopAction()">Rotate right</button>
 </div>
 
 

@@ -1,4 +1,7 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/observable/timer';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-root',
@@ -10,6 +13,7 @@ export class AppComponent implements OnInit {
   y = 100;
   scale = 1;
   rotate = 0;
+  timerSubscription: Subscription;
 
   ngOnInit(): void {
   }
@@ -44,5 +48,14 @@ export class AppComponent implements OnInit {
 
   rotateRight() {
     this.rotate += 1;
+  }
+
+  startAction(action) {
+    const timer = Observable.timer(0, 100);
+    this.timerSubscription = timer.subscribe(() => this[action]());
+  }
+
+  stopAction() {
+    this.timerSubscription.unsubscribe();
   }
 }
