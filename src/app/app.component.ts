@@ -14,6 +14,7 @@ export class AppComponent implements OnInit {
   scale = 1;
   rotate = 0;
   timerSubscription: Subscription;
+  hasPanStarted = false;
   startX = this.x;
   startY = this.y;
 
@@ -63,9 +64,16 @@ export class AppComponent implements OnInit {
     this.timerSubscription.unsubscribe();
   }
 
+  togglePan(hasPanStarted) {
+    this.hasPanStarted = hasPanStarted;
+    this.startX = this.x;
+    this.startY = this.y;
+  }
+
   pan(event) {
+    if (!this.hasPanStarted) { return; }
+
     switch (event.additionalEvent) {
-      case 'panstart': this.startX = this.x; console.log(this.startX); break;
       case this.PAN_ACTION.left:
       case this.PAN_ACTION.right:
       case this.PAN_ACTION.up:
@@ -74,7 +82,5 @@ export class AppComponent implements OnInit {
         this.y = this.startY + event.deltaY;
         break;
     }
-
-    console.log(event);
   }
 }

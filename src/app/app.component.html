@@ -1,7 +1,7 @@
 <div class="photo-editor">
   <img src="/assets/dummy_img.png" alt=""
        [ngStyle]="{left: x + 'px', top: y + 'px', transform: 'scale(' + scale + ') rotate(' + rotate + 'deg)' }"
-       (pan)="pan($event)">
+       (pan)="pan($event)" (panstart)="togglePan($event, true)" (panend)="togglePan($event, false)">
 </div>
 <div>
   <button (mousedown)="startAction('moveUp')" (mouseup)="stopAction()">up</button>
