@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/timer';
 import {Subscription} from 'rxjs/Subscription';
@@ -14,6 +14,10 @@ export class AppComponent implements OnInit {
   scale = 1;
   rotate = 0;
   timerSubscription: Subscription;
+  startX = this.x;
+  startY = this.y;
+
+  PAN_ACTION = { left: 'panleft', right: 'panright', up: 'panup', down: 'pandown' };
 
   ngOnInit(): void {
   }
@@ -57,5 +61,20 @@ export class AppComponent implements OnInit {
 
   stopAction() {
     this.timerSubscription.unsubscribe();
+  }
+
+  pan(event) {
+    switch (event.additionalEvent) {
+      case 'panstart': this.startX = this.x; console.log(this.startX); break;
+      case this.PAN_ACTION.left:
+      case this.PAN_ACTION.right:
+      case this.PAN_ACTION.up:
+      case this.PAN_ACTION.down:
+        this.x = this.startX + event.deltaX;
+        this.y = this.startY + event.deltaY;
+        break;
+    }
+
+    console.log(event);
   }
 }
