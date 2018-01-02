@@ -19,9 +19,9 @@ export class AppComponent implements OnInit {
 
   loggedEvent;
 
-  lastScale = this.scale;
-  startRotation = this.rotate;
-  lastRotation = this.rotate;
+  lastScale: number = null;
+  startRotation: number = null;
+  lastRotation: number = null;
 
 
   ngOnInit(): void {
@@ -69,6 +69,7 @@ export class AppComponent implements OnInit {
   }
 
   pan(event) {
+    event.preventDefault();
     console.log(event, event.type, event.additionalEvent);
 
     switch (event.type) {
@@ -79,23 +80,27 @@ export class AppComponent implements OnInit {
         break;
 
       case 'rotateend':
-        this.lastScale = this.scale;
-        this.lastRotation = this.rotate;
+        this.lastScale = null;
+        this.lastRotation = null;
+        this.startRotation = null;
         break;
 
       case 'rotate':
+        if (!this.startRotation) { return; }
         const diff = this.startRotation - event.rotation;
+        console.log('rotation diff', diff);
         this.rotate = this.lastRotation - diff;
         break;
 
       case 'pinch':
+        if (!this.lastScale) { return;}
         this.scale =  this.lastScale * event.scale;
         break;
       case 'pinchstart':
         this.lastScale = this.scale;
         break;
       case 'pinchend':
-        this.lastScale = this.scale;
+        this.lastScale = null;
         break;
 
       case 'pan':
