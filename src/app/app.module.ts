@@ -2,6 +2,7 @@ import {BrowserModule, HammerGestureConfig} from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
+import {FormsModule} from '@angular/forms';
 
 export class MyHammerConfig extends HammerGestureConfig  {
   overrides = <any>{
@@ -14,7 +15,8 @@ export class MyHammerConfig extends HammerGestureConfig  {
     AppComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

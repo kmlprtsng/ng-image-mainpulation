@@ -6,6 +6,14 @@
        [ngStyle]="{left: image.x + 'px', top: image.y + 'px', transform: 'scale(' + image.scale + ') rotate(' + image.rotate + 'deg)' }">
 </div>
 <div>
+  <select [(ngModel)]="selectedImageIndex">
+    <option *ngFor="let image of editableImages; let optionIndex = index;"
+            [value]="optionIndex">{{image.title}}</option>
+  </select>
+</div>
+<br />
+<br />
+<div>
   <button (mousedown)="startAction('moveUp')" (mouseup)="stopAction()">up</button>
   <button (mousedown)="startAction('moveDown')" (mouseup)="stopAction()">down</button>
   <button (mousedown)="startAction('moveLeft')" (mouseup)="stopAction()">left</button>

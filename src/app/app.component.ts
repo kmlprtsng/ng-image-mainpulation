@@ -4,6 +4,7 @@ import 'rxjs/add/observable/timer';
 import {Subscription} from 'rxjs/Subscription';
 
 class EditableImage {
+  title: string;
   src: string;
   x: number;
   y: number;
@@ -23,7 +24,16 @@ class EditableImage {
 export class AppComponent implements OnInit {
   editableImages: EditableImage[] = [
     new EditableImage({
+      title: 'Main Image',
       src: '/assets/dummy_img.png',
+      x: 100,
+      y: 100,
+      scale: 1,
+      rotate: 0
+    }),
+    new EditableImage({
+      title: 'Sticker 1',
+      src: '/assets/sticker1.png',
       x: 100,
       y: 100,
       scale: 1,
