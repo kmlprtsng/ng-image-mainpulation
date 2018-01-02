@@ -14,19 +14,15 @@ export class AppComponent implements OnInit {
   scale = 1;
   rotate = 0;
   timerSubscription: Subscription;
-  hasPanStarted = false;
-  startX = this.x;
-  startY = this.y;
-
-  hasScaleStarted = false;
-  startScale = this.scale;
+  lastPosX = this.x;
+  lastPosY = this.y;
 
   loggedEvent;
 
-  hasRotateStarted = false;
-  startRotate = this.rotate;
+  lastScale = this.scale;
+  startRotation = this.rotate;
+  lastRotation = this.rotate;
 
-  PAN_ACTION = { left: 'panleft', right: 'panright', up: 'panup', down: 'pandown' };
 
   ngOnInit(): void {
   }
@@ -72,53 +68,45 @@ export class AppComponent implements OnInit {
     this.timerSubscription.unsubscribe();
   }
 
-  togglePan(hasPanStarted) {
-    this.hasPanStarted = hasPanStarted;
-    this.startX = this.x;
-    this.startY = this.y;
-  }
-
   pan(event) {
-    if (!this.hasPanStarted) { return; }
+    console.log(event, event.type, event.additionalEvent);
 
-    switch (event.additionalEvent) {
-      case this.PAN_ACTION.left:
-      case this.PAN_ACTION.right:
-      case this.PAN_ACTION.up:
-      case this.PAN_ACTION.down:
-        this.x = this.startX + event.deltaX;
-        this.y = this.startY + event.deltaY;
+    switch (event.type) {
+      case 'rotatestart':
+        this.lastScale = this.scale;
+        this.lastRotation = this.rotate;
+        this.startRotation = event.rotation;
+        break;
+
+      case 'rotateend':
+        this.lastScale = this.scale;
+        this.lastRotation = this.rotate;
+        break;
+
+      case 'rotate':
+        const diff = this.startRotation - event.rotation;
+        this.rotate = this.lastRotation - diff;
+        break;
+
+      case 'pinch':
+        this.scale =  this.lastScale * event.scale;
+        break;
+      case 'pinchstart':
+        this.lastScale = this.scale;
+        break;
+      case 'pinchend':
+        this.lastScale = this.scale;
+        break;
+
+      case 'pan':
+        this.x = this.lastPosX + event.deltaX;
+        this.y = this.lastPosY + event.deltaY;
+        break;
+
+      case 'panend':
+        this.lastPosX = this.x;
+        this.lastPosY = this.y;
         break;
     }
-  }
-
-  pinch(event) {
-    if (!this.hasScaleStarted) { return; }
-
-    switch (event.additionalEvent) {
-      case 'pinchin':
-      case 'pinchout':
-        this.scale = this.startScale * event.scale;
-        // this.rotate = this.startRotate + event.rotation;
-        break;
-    }
-
-    this.loggedEvent = `Scale: ${event.scale}, Distance: ${event.distance}, rotation: ${event.rotation}`;
-  }
-
-  togglePinch(hasPinchStarted) {
-    this.hasScaleStarted = hasPinchStarted;
-    this.startScale = this.scale;
-  }
-
-  toggleRotate(hasRotateStarted) {
-    this.hasRotateStarted = hasRotateStarted;
-    this.startRotate = this.rotate;
-  }
-
-  rotateImage(event) {
-    if (!this.hasRotateStarted) { return; }
-
-    this.rotate = this.startRotate + event.rotation;
   }
 }
