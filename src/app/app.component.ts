@@ -17,8 +17,6 @@ export class AppComponent implements OnInit {
   lastPosX: number = null;
   lastPosY: number = null;
 
-  loggedEvent;
-
   lastScale: number = null;
   startRotation: number = null;
   lastRotation: number = null;
