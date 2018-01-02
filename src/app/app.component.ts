@@ -32,10 +32,18 @@ export class AppComponent implements OnInit {
       rotate: 0
     }),
     new EditableImage({
+      title: 'Background',
+      src: '/assets/border2.png',
+      x: 0,
+      y: 0,
+      scale: 1,
+      rotate: 0
+    }),
+    new EditableImage({
       title: 'Sticker 1',
       src: '/assets/sticker1.png',
-      x: 100,
-      y: 100,
+      x: 482,
+      y: 350,
       scale: 1,
       rotate: 0
     })
@@ -114,14 +122,14 @@ export class AppComponent implements OnInit {
         break;
 
       case 'rotate':
-        if (!this.startRotation) { return; }
+        if (this.startRotation === null) { return; }
         const diff = this.startRotation - event.rotation;
         console.log('rotation diff', diff);
         this.editableImages[this.selectedImageIndex].rotate = this.lastRotation - diff;
         break;
 
       case 'pinch':
-        if (!this.lastScale) { return; }
+        if (this.lastScale === null) { return; }
         this.editableImages[this.selectedImageIndex].scale =  this.lastScale * event.scale;
         break;
       case 'pinchstart':
@@ -132,7 +140,7 @@ export class AppComponent implements OnInit {
         break;
 
       case 'pan':
-        if (!this.lastPosX) { return; }
+        if (this.lastPosX === null) { return; }
 
         this.editableImages[this.selectedImageIndex].x = this.lastPosX + event.deltaX;
         this.editableImages[this.selectedImageIndex].y = this.lastPosY + event.deltaY;
