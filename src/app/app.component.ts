@@ -3,16 +3,36 @@ import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/timer';
 import {Subscription} from 'rxjs/Subscription';
 
+class EditableImage {
+  src: string;
+  x: number;
+  y: number;
+  scale: number;
+  rotate: number;
+
+  public constructor(init?: Partial<EditableImage>) {
+    Object.assign(this, init);
+  }
+}
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.sass']
 })
 export class AppComponent implements OnInit {
-  x = 100;
-  y = 100;
-  scale = 1;
-  rotate = 0;
+  editableImages: EditableImage[] = [
+    new EditableImage({
+      src: '/assets/dummy_img.png',
+      x: 100,
+      y: 100,
+      scale: 1,
+      rotate: 0
+    })
+  ];
+
+  selectedImageIndex = 0;
+
   timerSubscription: Subscription;
   lastPosX: number = null;
   lastPosY: number = null;
@@ -26,35 +46,35 @@ export class AppComponent implements OnInit {
   }
 
   moveUp() {
-    this.y--;
+    this.editableImages[this.selectedImageIndex].y--;
   }
 
   moveDown() {
-    this.y++;
+    this.editableImages[this.selectedImageIndex].y++;
   }
 
   moveLeft() {
-    this.x--;
+    this.editableImages[this.selectedImageIndex].x--;
   }
 
   moveRight() {
-    this.x++;
+    this.editableImages[this.selectedImageIndex].x++;
   }
 
   zoomIn() {
-    this.scale += 0.025;
+    this.editableImages[this.selectedImageIndex].scale += 0.025;
   }
 
   zoomOut() {
-    this.scale -= 0.025;
+    this.editableImages[this.selectedImageIndex].scale -= 0.025;
   }
 
   rotateLeft() {
-    this.rotate -= 1;
+    this.editableImages[this.selectedImageIndex].rotate -= 1;
   }
 
   rotateRight() {
-    this.rotate += 1;
+    this.editableImages[this.selectedImageIndex].rotate += 1;
   }
 
   startAction(action) {
@@ -72,8 +92,8 @@ export class AppComponent implements OnInit {
 
     switch (event.type) {
       case 'rotatestart':
-        this.lastScale = this.scale;
-        this.lastRotation = this.rotate;
+        this.lastScale = this.editableImages[this.selectedImageIndex].scale;
+        this.lastRotation = this.editableImages[this.selectedImageIndex].rotate;
         this.startRotation = event.rotation;
         break;
 
@@ -87,15 +107,15 @@ export class AppComponent implements OnInit {
         if (!this.startRotation) { return; }
         const diff = this.startRotation - event.rotation;
         console.log('rotation diff', diff);
-        this.rotate = this.lastRotation - diff;
+        this.editableImages[this.selectedImageIndex].rotate = this.lastRotation - diff;
         break;
 
       case 'pinch':
-        if (!this.lastScale) { return;}
-        this.scale =  this.lastScale * event.scale;
+        if (!this.lastScale) { return; }
+        this.editableImages[this.selectedImageIndex].scale =  this.lastScale * event.scale;
         break;
       case 'pinchstart':
-        this.lastScale = this.scale;
+        this.lastScale = this.editableImages[this.selectedImageIndex].scale;
         break;
       case 'pinchend':
         this.lastScale = null;
@@ -104,13 +124,13 @@ export class AppComponent implements OnInit {
       case 'pan':
         if (!this.lastPosX) { return; }
 
-        this.x = this.lastPosX + event.deltaX;
-        this.y = this.lastPosY + event.deltaY;
+        this.editableImages[this.selectedImageIndex].x = this.lastPosX + event.deltaX;
+        this.editableImages[this.selectedImageIndex].y = this.lastPosY + event.deltaY;
         break;
 
       case 'panstart':
-        this.lastPosX = this.x;
-        this.lastPosY = this.y;
+        this.lastPosX = this.editableImages[this.selectedImageIndex].x;
+        this.lastPosY = this.editableImages[this.selectedImageIndex].y;
         break;
 
       case 'panend':
