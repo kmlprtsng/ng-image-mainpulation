@@ -1,7 +1,8 @@
-<div class="photo-editor" (pan)="pan($event)" (panstart)="pan($event)" (panend)="pan($event)"
-     (pinch)="pan($event)" (pinchstart)="pan($event)" (pinchend)="pan($event)"
-     (rotate)="pan($event)" (rotatestart)="pan($event)" (rotateend)="pan($event)">
+<div class="photo-editor" (pan)="handleGestures($event)" (panstart)="handleGestures($event)" (panend)="handleGestures($event)"
+     (pinch)="handleGestures($event)" (pinchstart)="handleGestures($event)" (pinchend)="handleGestures($event)"
+     (rotate)="handleGestures($event)" (rotatestart)="handleGestures($event)" (rotateend)="handleGestures($event)">
   <img [src]="image.src" alt="" *ngFor="let image of editableImages"
+       (mousedown)="$event.preventDefault()"
        [ngStyle]="{left: image.x + 'px', top: image.y + 'px', transform: 'scale(' + image.scale + ') rotate(' + image.rotate + 'deg)' }">
 </div>
 <div>

@@ -86,7 +86,7 @@ export class AppComponent implements OnInit {
     this.timerSubscription.unsubscribe();
   }
 
-  pan(event) {
+  handleGestures(event) {
     event.preventDefault();
     console.log(event, event.type, event.additionalEvent);
 
