@@ -18,6 +18,14 @@ export class AppComponent implements OnInit {
   startX = this.x;
   startY = this.y;
 
+  hasScaleStarted = false;
+  startScale = this.scale;
+
+  loggedEvent;
+
+  hasRotateStarted = false;
+  startRotate = this.rotate;
+
   PAN_ACTION = { left: 'panleft', right: 'panright', up: 'panup', down: 'pandown' };
 
   ngOnInit(): void {
@@ -82,5 +90,35 @@ export class AppComponent implements OnInit {
         this.y = this.startY + event.deltaY;
         break;
     }
+  }
+
+  pinch(event) {
+    if (!this.hasScaleStarted) { return; }
+
+    switch (event.additionalEvent) {
+      case 'pinchin':
+      case 'pinchout':
+        this.scale = this.startScale * event.scale;
+        // this.rotate = this.startRotate + event.rotation;
+        break;
+    }
+
+    this.loggedEvent = `Scale: ${event.scale}, Distance: ${event.distance}, rotation: ${event.rotation}`;
+  }
+
+  togglePinch(hasPinchStarted) {
+    this.hasScaleStarted = hasPinchStarted;
+    this.startScale = this.scale;
+  }
+
+  toggleRotate(hasRotateStarted) {
+    this.hasRotateStarted = hasRotateStarted;
+    this.startRotate = this.rotate;
+  }
+
+  rotateImage(event) {
+    if (!this.hasRotateStarted) { return; }
+
+    this.rotate = this.startRotate + event.rotation;
   }
 }

@@ -1,7 +1,9 @@
 <div class="photo-editor">
   <img src="/assets/dummy_img.png" alt=""
        [ngStyle]="{left: x + 'px', top: y + 'px', transform: 'scale(' + scale + ') rotate(' + rotate + 'deg)' }"
-       (pan)="pan($event)" (panstart)="togglePan($event, true)" (panend)="togglePan($event, false)">
+       (pan)="pan($event)" (panstart)="togglePan($event, true)" (panend)="togglePan($event, false)"
+       (pinch)="pinch($event)" (pinchstart)="togglePinch(true, $event)" (pinchend)="togglePinch(false, $event)"
+       (rotate)="rotateImage($event)" (rotatestart)="toggleRotate(true)" (rotateend)="toggleRotate(false)">
 </div>
 <div>
   <button (mousedown)="startAction('moveUp')" (mouseup)="stopAction()">up</button>
@@ -17,5 +19,7 @@
   <button (mousedown)="startAction('rotateLeft')" (mouseup)="stopAction()">Rotate left</button>
   <button (mousedown)="startAction('rotateRight')" (mouseup)="stopAction()">Rotate right</button>
 </div>
+
+Event: {{loggedEvent}}
 
 
