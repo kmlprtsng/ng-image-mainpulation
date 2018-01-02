@@ -1,7 +1,7 @@
 <div class="photo-editor">
   <img src="/assets/dummy_img.png" alt=""
        [ngStyle]="{left: x + 'px', top: y + 'px', transform: 'scale(' + scale + ') rotate(' + rotate + 'deg)' }"
-       (pan)="pan($event)" (panend)="pan($event)"
+       (pan)="pan($event)" (panstart)="pan($event)" (panend)="pan($event)"
        (pinch)="pan($event)" (pinchstart)="pan($event)" (pinchend)="pan($event)"
        (rotate)="pan($event)" (rotatestart)="pan($event)" (rotateend)="pan($event)">
 </div>

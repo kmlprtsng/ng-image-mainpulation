@@ -14,8 +14,8 @@ export class AppComponent implements OnInit {
   scale = 1;
   rotate = 0;
   timerSubscription: Subscription;
-  lastPosX = this.x;
-  lastPosY = this.y;
+  lastPosX: number = null;
+  lastPosY: number = null;
 
   loggedEvent;
 
@@ -104,13 +104,20 @@ export class AppComponent implements OnInit {
         break;
 
       case 'pan':
+        if (!this.lastPosX) { return; }
+
         this.x = this.lastPosX + event.deltaX;
         this.y = this.lastPosY + event.deltaY;
         break;
 
-      case 'panend':
+      case 'panstart':
         this.lastPosX = this.x;
         this.lastPosY = this.y;
+        break;
+
+      case 'panend':
+        this.lastPosX = null;
+        this.lastPosY = null;
         break;
     }
   }
